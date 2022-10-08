@@ -1,9 +1,10 @@
 package matt.sys.machine
 
 import matt.lang.shutdown.duringShutdown
+import matt.model.idea.ProceedingIdea
 import matt.model.tostringbuilder.toStringBuilder
 
-abstract class Machine {
+abstract class Machine: ProceedingIdea {
 
   private var didFirstBoot = false
   private var on: Boolean = false
