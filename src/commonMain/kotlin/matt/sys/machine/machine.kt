@@ -11,6 +11,7 @@ abstract class Machine: ProceedingIdea {
 
   override fun toString() = toStringBuilder(::on)
 
+
   @Synchronized fun start() {
 	if (!didFirstBoot) {
 	  duringShutdown {
