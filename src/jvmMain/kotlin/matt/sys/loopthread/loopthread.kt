@@ -4,7 +4,7 @@ import matt.log.profile.err.StructuredExceptionHandler
 import matt.model.flowlogic.controlflowstatement.ControlFlow
 import matt.model.flowlogic.controlflowstatement.ControlFlow.BREAK
 import matt.model.flowlogic.controlflowstatement.ControlFlow.CONTINUE
-import matt.model.startstop.Stoppable
+import matt.model.flowlogic.startstop.Stoppable
 import kotlin.time.Duration
 
 class MutableRefreshTimeDaemonLoop(

@@ -1,8 +1,8 @@
 package matt.sys.machine
 
 import matt.lang.shutdown.duringShutdown
-import matt.model.idea.ProceedingIdea
-import matt.model.tostringbuilder.toStringBuilder
+import matt.model.code.idea.ProceedingIdea
+import matt.model.obj.tostringbuilder.toStringBuilder
 
 abstract class Machine: ProceedingIdea {
 
