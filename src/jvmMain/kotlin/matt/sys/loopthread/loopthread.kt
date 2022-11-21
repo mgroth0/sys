@@ -4,16 +4,21 @@ import matt.log.profile.err.StructuredExceptionHandler
 import matt.model.flowlogic.controlflowstatement.ControlFlow
 import matt.model.flowlogic.controlflowstatement.ControlFlow.BREAK
 import matt.model.flowlogic.controlflowstatement.ControlFlow.CONTINUE
+import matt.model.flowlogic.startstop.Startable
 import matt.model.flowlogic.startstop.Stoppable
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.concurrent.thread
 import kotlin.time.Duration
 
 class MutableRefreshTimeDaemonLoop(
   sleepInterval: Duration,
+  isDaemon: Boolean = true,
   op: DaemonLoop.()->ControlFlow,
   finalize: ()->Unit = {},
   uncaughtExceptionHandler: StructuredExceptionHandler? = null
 ): DaemonLoop(
   sleepInterval,
+  isDaemon=isDaemon,
   op = op,
   finalize = finalize,
   uncaughtExceptionHandler = uncaughtExceptionHandler
@@ -23,11 +28,17 @@ class MutableRefreshTimeDaemonLoop(
 
 open class DaemonLoop(
   protected open val sleepInterval: Duration,
+  isDaemon: Boolean = true,
   private val op: DaemonLoop.()->ControlFlow,
   private val finalize: ()->Unit = {},
-  uncaughtExceptionHandler: StructuredExceptionHandler? = null
-): Thread(), Stoppable {
+  uncaughtExceptionHandler: StructuredExceptionHandler? = null,
+): Stoppable, Startable {
 
+  companion object {
+	private val nextID = AtomicInteger(0)
+  }
+
+  private val id = nextID.getAndIncrement()
 
   private var shouldContinue: Boolean = true
 
@@ -37,29 +48,42 @@ open class DaemonLoop(
 
   override fun stopAndJoin() {
 	sendStopSignal()
-	join()
+	myThread.join()
   }
 
-  init {
-	isDaemon = true
-	uncaughtExceptionHandler?.let {
-	  this.uncaughtExceptionHandler = it
-	}
-  }
+  fun interrupt() = myThread.interrupt()
 
-  final override fun run() {
-	while (shouldContinue) {
-	  when (op()) {
-		CONTINUE -> {
-		  sleep(sleepInterval) {
-			if (shouldContinue) throw it
+  private val myThread by lazy {
+	thread(
+	  start = false,
+	  isDaemon = isDaemon,
+	  name = "DaemonLoop $id"
+	) {
+	  while (shouldContinue) {
+		when (op()) {
+		  CONTINUE -> {
+			sleep(sleepInterval) {
+			  if (shouldContinue) throw it
+			}
 		  }
-		}
 
-		BREAK    -> break
+		  BREAK    -> break
+		}
+	  }
+	  finalize()
+	}.apply {
+	  uncaughtExceptionHandler?.let {
+		this.uncaughtExceptionHandler = it
 	  }
 	}
-	finalize()
+  }
+
+  override fun sendStartSignal() {
+	myThread.start()
+  }
+
+  override fun startAndJoin() {
+	myThread.start()
   }
 }
 
