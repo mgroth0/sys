@@ -17,11 +17,7 @@ class MutableRefreshTimeDaemonLoop(
   finalize: ()->Unit = {},
   uncaughtExceptionHandler: StructuredExceptionHandler? = null
 ): DaemonLoop(
-  sleepInterval,
-  isDaemon=isDaemon,
-  op = op,
-  finalize = finalize,
-  uncaughtExceptionHandler = uncaughtExceptionHandler
+  sleepInterval, isDaemon = isDaemon, op = op, finalize = finalize, uncaughtExceptionHandler = uncaughtExceptionHandler
 ) {
   public override var sleepInterval = super.sleepInterval
 }
@@ -55,21 +51,38 @@ open class DaemonLoop(
 
   private val myThread by lazy {
 	thread(
-	  start = false,
-	  isDaemon = isDaemon,
-	  name = "DaemonLoop $id"
+	  start = false, isDaemon = isDaemon, name = "DaemonLoop $id"
 	) {
-	  while (shouldContinue) {
-		when (op()) {
-		  CONTINUE -> {
-			sleep(sleepInterval) {
-			  if (shouldContinue) throw it
-			}
-		  }
 
-		  BREAK    -> break
+	  if (sleepInterval == Duration.ZERO) {
+		while (shouldContinue) {
+		  when (op()) {
+			CONTINUE -> continue
+			BREAK    -> break
+		  }
+		}
+	  } else {
+		while (shouldContinue) {
+		  when (op()) {
+			CONTINUE -> {
+			  sleep(sleepInterval) {
+				if (shouldContinue) throw it
+			  }
+			}
+
+			BREAK    -> break
+		  }
 		}
 	  }
+
+
+
+
+
+
+
+
+
 	  finalize()
 	}.apply {
 	  uncaughtExceptionHandler?.let {
