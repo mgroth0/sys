@@ -2,7 +2,7 @@ package matt.sys.machine
 
 import matt.lang.shutdown.duringShutdown
 import matt.model.code.idea.ProceedingIdea
-import matt.model.obj.tostringbuilder.toStringBuilder
+import matt.reflect.tostring.toStringBuilder
 
 abstract class Machine: ProceedingIdea {
 
