@@ -1,14 +1,21 @@
 {
-    "type":  "matt.mstruct.bj.MultiPlatformModule", "jvm": {},
-    "dependencies": [
-        {
-            "type": "matt.mstruct.bj.BuildJsonLibDependency",
-            "cfg": "commonMainApi",
-            "key": "kt-stdlib"
-        },{
-            "type" : "matt.mstruct.bj.BuildJsonProjectDependency",
-            "cfg" :  "commonMainApi",
-            "path" : ":k:log:profile"
-        }
-    ]
+  "type" :         "matt.mstruct.bj.MultiPlatformModule",
+  "jvm" :          {},
+  "dependencies" : [
+	{
+	  "type" : "matt.mstruct.bj.BuildJsonLibDependency",
+	  "cfg" :  "commonMainApi",
+	  "key" :  "kt-stdlib"
+	},
+	{
+	  "type" : "matt.mstruct.bj.BuildJsonProjectDependency",
+	  "cfg" :  "commonMainApi",
+	  "path" : ":k:log:profile"
+	},
+	{
+	  "type" : "matt.mstruct.bj.BuildJsonProjectDependency",
+	  "cfg" :  "commonMainApi",
+	  "path" : ":k:reflect"
+	}
+  ]
 }
