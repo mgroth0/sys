@@ -1,7 +1,7 @@
 package matt.sys.machine
 
+import matt.lang.idea.ProceedingIdea
 import matt.lang.shutdown.duringShutdown
-import matt.model.code.idea.ProceedingIdea
 import matt.reflect.tostring.toStringBuilder
 
 
