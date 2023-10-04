@@ -2,7 +2,7 @@ package matt.sys.test
 
 
 import matt.sys.idgen.IDGenerator
-import matt.test.JupiterTestAssertions.assertRunsInOneMinute
+import matt.test.assertions.JupiterTestAssertions.assertRunsInOneMinute
 import kotlin.test.Test
 
 class SysTests() {
