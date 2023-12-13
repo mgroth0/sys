@@ -1,13 +1,13 @@
 package matt.sys.loopthread
 
 import matt.async.thread.namedThread
+import matt.lang.atomic.AtomicInt
 import matt.log.profile.err.StructuredExceptionHandler
 import matt.model.flowlogic.controlflowstatement.ControlFlow
 import matt.model.flowlogic.controlflowstatement.ControlFlow.BREAK
 import matt.model.flowlogic.controlflowstatement.ControlFlow.CONTINUE
 import matt.model.flowlogic.startstop.Startable
 import matt.model.flowlogic.startstop.Stoppable
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Duration
 
 class MutableRefreshTimeDaemonLoop(
@@ -35,7 +35,7 @@ open class DaemonLoop(
 ) : Stoppable, Startable {
 
     companion object {
-        private val nextID = AtomicInteger(0)
+        private val nextID = AtomicInt(0)
     }
 
     private val id = nextID.getAndIncrement()
