@@ -2,16 +2,16 @@ package matt.sys.machine
 
 import matt.lang.idea.ProceedingIdea
 import matt.lang.shutdown.ShutdownContext
-import matt.reflect.tostring.toStringBuilder
+import matt.reflect.tostring.PropReflectingStringableClass
 
 
 context(ShutdownContext)
-abstract class Machine() : ProceedingIdea {
+abstract class Machine: PropReflectingStringableClass() , ProceedingIdea {
 
     private var didFirstBoot = false
     private var on: Boolean = false
 
-    override fun toString() = toStringBuilder(::on)
+    final override fun reflectingToStringProps() = setOf(::on)
 
 
     @Synchronized

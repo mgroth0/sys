@@ -42,11 +42,11 @@ open class DaemonLoop(
 
     private var shouldContinue: Boolean = true
 
-    override fun sendStopSignal() {
+    final override fun sendStopSignal() {
         shouldContinue = false
     }
 
-    override fun stopAndJoin() {
+    final override fun stopAndJoin() {
         sendStopSignal()
         myThread.join()
     }
@@ -95,11 +95,11 @@ open class DaemonLoop(
         }
     }
 
-    override fun sendStartSignal() {
+    final override fun sendStartSignal() {
         myThread.start()
     }
 
-    override fun startAndJoin() {
+    final override fun startAndJoin() {
         myThread.start()
     }
 }
