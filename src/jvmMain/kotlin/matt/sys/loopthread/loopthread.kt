@@ -17,12 +17,12 @@ class MutableRefreshTimeDaemonLoop(
     finalize: () -> Unit = {},
     uncaughtExceptionHandler: StructuredExceptionHandler? = null
 ) : DaemonLoop(
-    sleepInterval,
-    isDaemon = isDaemon,
-    op = op,
-    finalize = finalize,
-    uncaughtExceptionHandler = uncaughtExceptionHandler
-) {
+        sleepInterval,
+        isDaemon = isDaemon,
+        op = op,
+        finalize = finalize,
+        uncaughtExceptionHandler = uncaughtExceptionHandler
+    ) {
     public override var sleepInterval = super.sleepInterval
 }
 

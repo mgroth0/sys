@@ -9,12 +9,8 @@ class IDGenerator(
         .filter { it !in taken }
         .iterator()
 
-    override fun hasNext(): Boolean {
-        return newIDs.hasNext()
-    }
+    override fun hasNext(): Boolean = newIDs.hasNext()
 
-    override fun next(): Int {
-        return newIDs.next()
-    }
+    override fun next(): Int = newIDs.next()
 
 }
