@@ -6,7 +6,7 @@ import matt.reflect.tostring.PropReflectingStringableClass
 
 
 context(ShutdownContext)
-abstract class Machine: PropReflectingStringableClass() , ProceedingIdea {
+abstract class Machine: PropReflectingStringableClass(), ProceedingIdea {
 
     private var didFirstBoot = false
     private var on: Boolean = false

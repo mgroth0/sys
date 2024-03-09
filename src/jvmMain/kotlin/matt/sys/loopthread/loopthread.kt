@@ -31,7 +31,7 @@ open class DaemonLoop(
     isDaemon: Boolean = true,
     private val op: DaemonLoop.() -> ControlFlow,
     private val finalize: () -> Unit = {},
-    uncaughtExceptionHandler: StructuredExceptionHandler? = null,
+    uncaughtExceptionHandler: StructuredExceptionHandler? = null
 ) : Stoppable, Startable {
 
     companion object {

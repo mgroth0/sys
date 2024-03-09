@@ -7,7 +7,8 @@ import kotlin.test.Test
 
 class SysTests() {
     @Test
-    fun genSomeIds() = assertRunsInOneMinute {
-        IDGenerator(listOf(1, 2, 3)).next()
-    }
+    fun genSomeIds() =
+        assertRunsInOneMinute {
+            IDGenerator(listOf(1, 2, 3)).next()
+        }
 }
